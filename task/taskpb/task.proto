@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package task;
+
+option go_package = "taskpb";
+
+message Task {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  bool completed = 4;
+}
+
+message GetTaskRequest { string id = 1; }
+
+message GetTaskResponse {
+  bool status = 1;
+  Task data = 2;
+}
+
+message AddTaskRequest { Task task = 1; }
+
+message AddTaskResponse {
+  bool status = 1;
+  Task data = 2;
+}
+
+message UpdateTaskRequest { Task task = 1; }
+
+message UpdateTaskResponse {
+  bool status = 1;
+  Task data = 2;
+}
+
+message DeleteTaskRequest { string task_id = 1; }
+
+message DeleteTaskResponse { bool status = 1; }
+
+message GetTasksRequest {}
+
+message GetTasksResponse {
+  bool status = 1;
+  Task data = 2;
+}
+
+message AddBatchTaskRequest { Task task = 1; }
+
+message AddBatchTaskResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+service TaskService {
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse) {};
+  rpc AddTask(AddTaskRequest) returns (AddTaskResponse) {};
+  rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse) {};
+  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse) {};
+  rpc GetTasks(GetTasksRequest) returns (stream GetTasksResponse) {};
+  rpc AddBatchTask(stream AddBatchTaskRequest) returns (AddBatchTaskResponse) {
+  };
+}
